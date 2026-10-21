@@ -2,7 +2,7 @@
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/schema/card.schema.json",
 	"title": "ProjectCard",
-	"description": "Signature of the dark poster card for a GitHub profile README (750 × 1050 PNG). See SIGNATURE.md in itsNikolay/itsNikolay.",
+	"description": "Signature of the poster card for a GitHub profile README (750 × 1050 PNG, dark and light). See SIGNATURE.md in itsNikolay/itsNikolay.",
 	"type": "object",
 	"additionalProperties": false,
 	"required": [

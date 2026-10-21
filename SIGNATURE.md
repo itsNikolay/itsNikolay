@@ -1,11 +1,11 @@
 # Card signature
 
-A project card is a dark poster for a GitHub profile README: a picture at the top that fades into the card,
+A project card is a poster for a GitHub profile README: a picture at the top that fades into the card,
 a serif headline, one or two lines on what the project gives the user, a pill button and a row of icons.
-One `card.png` serves both GitHub themes: its dark body stands out on white, and transparent rounded
-corners with a faint light ring keep its edge on GitHub's dark background.
+It comes in two themes: the dark `card.png` and the light `card-light.png`. The README snippet shows the
+light one on GitHub's light theme through `<picture>`, and the dark one everywhere else.
 
-<img src="cards/obsidian-hovered-table-of-content/card.png" width="250" alt="Example: the Hovered Table of Content card">
+<img src="cards/obsidian-hovered-table-of-content/card.png" width="250" alt="Example: the dark Hovered Table of Content card"> <img src="cards/obsidian-hovered-table-of-content/card-light.png" width="250" alt="Example: the light Hovered Table of Content card">
 
 ## ProjectCard
 
@@ -33,7 +33,9 @@ type CardIcon = 'obsidian' | 'typescript' | 'plugin' | 'javascript' | 'css' | 'm
   | 'react' | 'nodedotjs' | 'python' | 'ruby' | 'github';
 ```
 
-Next to `card.json` lies the picture, `art.png` (or `.jpg`, `.webp`), and the rendered `card.png`.
+Next to `card.json` lie the picture, `art.png` (or `.jpg`, `.webp`), and the rendered `card.png` and
+`card-light.png`. An optional `art-light.png` is the picture for the light card; without it the light card
+shows `art.png` framed in a rounded panel, since a dark screenshot does not fade well into a light card.
 
 Icon marks come from [simple-icons](https://simpleicons.org) (CC0). To add one, put its name and path
 into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; the tests check both agree.
@@ -43,9 +45,9 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 | | |
 | --- | --- |
 | Canvas | 750 × 1050 PNG (5:7), transparent corners, shown at `width="250"` |
-| Background | `#191c22`, text `#f3efe6`, subtitle at 70 % and footer at 82 % opacity |
-| Edge | 2 px inner ring, `rgba(255, 255, 255, .1)`, radius 26 px |
-| Picture | Full width, top 57 % by default (750 × 598 lands 1:1), fades into the background from its middle |
+| Background | Dark `#191c22` with text `#f3efe6`; light `#f4f1ea` with text `#191c22`; subtitle at 70 % and footer at 82 % opacity |
+| Edge | 2 px inner ring in the text colour at 10 %, radius 26 px |
+| Picture | Full width, top 57 % by default (750 × 598 lands 1:1), fades into the background from its middle; framed: 24 px in, radius 14 px, no fade |
 | Headline | Playfair Display 400, 64 px, line height 1.06, balanced, at most 2 lines |
 | Subtitle | Instrument Sans 400, 26 px, line height 1.4, at most 2 lines |
 | Button | Instrument Sans 24 px in a 1.5 px outline pill with a ↗ arrow |
@@ -69,3 +71,14 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 > The headline is the project name with a dot; the sub is one or two plain sentences on what it gives
 > the user, at most 120 characters; the cta is "View on GitHub"; the owner is OWNER; pick up to 3 icons
 > from the schema. Start the image at { "x": 50, "y": 50, "zoom": 100, "height": 57 }. Answer with the JSON only.
+
+## Header
+
+The profile header, `header/header.json`, is set in the same type on a transparent background:
+the name in Playfair Display, a tagline and up to four technologies in small capitals. `npm run render`
+without slugs renders it to `header/header.png` and `header-light.png`, 1530 × 390, shown at `width="510"`,
+the width of two cards side by side.
+
+```json
+{ "name": "Nikolay Ponomarev.", "tagline": "Useful tools. Thoughtful details.", "stack": ["Ruby on Rails", "TypeScript", "Obsidian"] }
+```

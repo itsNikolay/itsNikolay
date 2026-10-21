@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Nikolay Ponomarev — Useful tools. Thoughtful details.">
-  <defs><linearGradient id="bg" x2="0.4" y2="1"><stop stop-color="#1e1e1c"/><stop offset="1" stop-color="#171c23"/></linearGradient></defs>
-  <rect x="1" y="1" width="1198" height="298" rx="24" fill="url(#bg)" stroke="#343537" stroke-width="2"/>
-  <text x="52" y="61" font-family="Arial,sans-serif" font-size="15" letter-spacing="4" fill="#b8b7b0">ITSNIKOLAY / OPEN SOURCE</text>
-  <text x="49" y="143" font-family="Georgia,serif" font-size="61" fill="#f1efe7">Nikolay Ponomarev.</text>
-  <text x="52" y="196" font-family="Arial,sans-serif" font-size="25" fill="#b8b7b0">Useful tools. Thoughtful details.</text>
-  <text x="52" y="255" font-family="Arial,sans-serif" font-size="14" letter-spacing="2" fill="#b8b7b0">RUBY ON RAILS · TYPESCRIPT · OBSIDIAN</text>
-  <g fill="none" stroke="#b8b7b0" stroke-width="1.5" opacity="0.5"><rect x="920" y="62" width="96" height="126" rx="12" transform="rotate(-12 968 125)"/><rect x="1000" y="104" width="96" height="126" rx="12" transform="rotate(10 1048 167)"/></g>
-</svg>
