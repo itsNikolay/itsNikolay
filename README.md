@@ -5,29 +5,18 @@
 
 ## Featured projects
 
-### Mermaid Flow Enhancer
+Small tools for a smoother Obsidian workflow. Explore a project below.
 
-**Clearer diagrams, right inside Obsidian.**
+<p align="center">
+  <a href="https://github.com/itsNikolay/obsidian-mermaid-flow-enhancer"><img src="assets/obsidian-mermaid-flow-enhancer.png" width="350" alt="Mermaid Flow Enhancer — Compact, tidy Mermaid flowcharts in Obsidian. Hover any node to light up the path that leads to it." /></a>
+  <a href="https://github.com/itsNikolay/obsidian-hovered-table-of-content"><img src="assets/obsidian-hovered-table-of-content.png" width="350" alt="Hovered Table of Content — The outline of any Obsidian note, one hover away. With section previews and sticky headings." /></a>
+</p>
 
-An Obsidian plugin for compact Mermaid flowcharts: aligned branches, cleaner connectors, light and dark themes, and smooth ancestor-path highlighting when you hover over a node.
+## More tools
 
-<a href="https://github.com/itsNikolay/obsidian-mermaid-flow-enhancer"><img src="https://raw.githubusercontent.com/itsNikolay/obsidian-mermaid-flow-enhancer/main/docs/assets/grocery-delivery-dark.png" alt="Mermaid Flow Enhancer — grocery delivery flowchart with highlighted ancestor paths" width="760" /></a>
-
-<p><a href="https://community.obsidian.md/plugins/mermaid-flow-enhancer"><img src="https://raw.githubusercontent.com/itsNikolay/obsidian-mermaid-flow-enhancer/main/docs/assets/add-to-obsidian.svg" alt="Add to Obsidian" height="44" /></a></p>
-
-[View source →](https://github.com/itsNikolay/obsidian-mermaid-flow-enhancer) · [Watch the demo →](https://github.com/itsNikolay/obsidian-mermaid-flow-enhancer#preview) · [Latest release →](https://github.com/itsNikolay/obsidian-mermaid-flow-enhancer/releases/latest)
-
-`Obsidian` `Mermaid` `TypeScript` `Flowcharts` `MIT`
-
-<!-- PROJECTS: Add new project sections above this marker. Use a title, benefit, brief description, optional image, and source/demo links. Keep older projects below the featured project. -->
-
----
-
-### Chrome Window Splitter
+### [Chrome Window Splitter ↗](https://github.com/itsNikolay/chrome-extension-splitter)
 
 Arrange Chrome windows side by side in convenient positions on your desktop.
-
-[View source →](https://github.com/itsNikolay/chrome-extension-splitter)
 
 `Chrome extension` `TypeScript` `Productivity`
 
