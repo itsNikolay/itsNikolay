@@ -1,0 +1,20 @@
+{
+	"$schema": "../../schema/card.schema.json",
+	"version": 1,
+	"repository": "itsNikolay/obsidian-mermaid-flow-enhancer",
+	"headline": "Mermaid Flow Enhancer.",
+	"sub": "Compact, tidy Mermaid flowcharts in Obsidian. Hover any node to light up the path that leads to it.",
+	"cta": "View on GitHub",
+	"owner": "itsNikolay",
+	"icons": [
+		"obsidian",
+		"typescript",
+		"plugin"
+	],
+	"image": {
+		"x": 50,
+		"y": 50,
+		"zoom": 100,
+		"height": 57
+	}
+}

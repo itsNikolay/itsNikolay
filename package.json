@@ -1,0 +1,30 @@
+{
+	"name": "profile-cards",
+	"version": "1.0.0",
+	"description": "Dark poster cards for the projects in a GitHub profile README, rendered from one card.json per project.",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"render": "node --experimental-strip-types src/render.ts",
+		"new": "node --experimental-strip-types src/new-card.ts",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit",
+		"check": "npm run typecheck && npm test",
+		"postinstall": "playwright install chromium"
+	},
+	"keywords": ["github-profile", "readme", "project-card", "playwright"],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/itsNikolay/itsNikolay.git"
+	},
+	"devDependencies": {
+		"@types/node": "22.15.17",
+		"playwright": "1.64.0",
+		"typescript": "5.9.3",
+		"vitest": "5.0.5"
+	},
+	"engines": {
+		"node": ">=22.13.0"
+	}
+}

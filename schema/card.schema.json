@@ -1,0 +1,112 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/schema/card.schema.json",
+	"title": "ProjectCard",
+	"description": "Signature of the dark poster card for a GitHub profile README (750 × 1050 PNG). See SIGNATURE.md in itsNikolay/itsNikolay.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"version",
+		"repository",
+		"headline",
+		"sub",
+		"cta",
+		"owner",
+		"icons",
+		"image"
+	],
+	"properties": {
+		"$schema": {
+			"type": "string"
+		},
+		"version": {
+			"const": 1
+		},
+		"repository": {
+			"type": "string",
+			"pattern": "^[\\w.-]+/[\\w.-]+$",
+			"description": "GitHub owner/name of the project; the card links there."
+		},
+		"headline": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 44,
+			"description": "Project name, ends with a dot. At most 2 lines."
+		},
+		"sub": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 120,
+			"description": "What the project gives the user. At most 2 lines."
+		},
+		"cta": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 22,
+			"description": "Label of the pill button, usually \"View on GitHub\"."
+		},
+		"owner": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 22,
+			"description": "Bottom-left signature, usually the GitHub user."
+		},
+		"icons": {
+			"type": "array",
+			"maxItems": 3,
+			"uniqueItems": true,
+			"description": "Bottom-right icons: platform, language, kind.",
+			"items": {
+				"enum": [
+					"obsidian",
+					"typescript",
+					"plugin",
+					"javascript",
+					"css",
+					"markdown",
+					"react",
+					"nodedotjs",
+					"python",
+					"ruby",
+					"github"
+				]
+			}
+		},
+		"image": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": [
+				"x",
+				"y",
+				"zoom",
+				"height"
+			],
+			"description": "Crop of the picture, in percent.",
+			"properties": {
+				"x": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 100,
+					"description": "Horizontal focus."
+				},
+				"y": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 100,
+					"description": "Vertical focus."
+				},
+				"zoom": {
+					"type": "number",
+					"minimum": 100,
+					"maximum": 220
+				},
+				"height": {
+					"type": "number",
+					"minimum": 45,
+					"maximum": 72,
+					"description": "Share of the card height the picture covers."
+				}
+			}
+		}
+	}
+}
