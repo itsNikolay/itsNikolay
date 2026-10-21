@@ -90,7 +90,12 @@ export const escape = (text: string) => text.replace(/[&<>"']/g, (char) => entit
 
 export const SPARK = '<svg class="spark" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0C5.4 3.6 6.4 4.6 10 5 6.4 5.4 5.4 6.4 5 10 4.6 6.4 3.6 5.4 0 5 3.6 4.6 4.6 3.6 5 0Z"/></svg>';
 const ARROW = '<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
-const icon = (key: CardIcon) => `<svg class="icon" viewBox="0 0 24 24" role="img" aria-label="${escape(CARD_ICONS[key].name)}"><path d="${CARD_ICONS[key].d}"/></svg>`;
+const icon = (key: CardIcon) => {
+	const { name, d } = CARD_ICONS[key], color = 'color' in CARD_ICONS[key] ? CARD_ICONS[key].color : undefined;
+	return `<svg class="icon" viewBox="0 0 24 24" role="img" aria-label="${escape(name)}"${color ? ` style="--brand: ${color}"` : ''}><path d="${d}"/></svg>`;
+};
+/** The GitHub mark in front of the button label: every card links to its repository on GitHub. */
+const GITHUB = `<svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="${CARD_ICONS.github.d}"/></svg>`;
 
 /**
  * The card as a 750 × 1050 page in a theme. Transparent rounded corners and a hairline ring in the ink
@@ -116,11 +121,12 @@ html, body { width: ${CARD_WIDTH}px; height: ${CARD_HEIGHT}px; background: trans
 .copy { position: absolute; left: 40px; right: 40px; top: calc(var(--media) - 22px); display: grid; gap: 18px; justify-items: start; }
 .headline { font: 400 64px/1.06 var(--serif); letter-spacing: -.012em; text-wrap: balance; }
 .sub { font-size: 26px; line-height: 1.4; color: var(--sub); max-width: 92%; }
-.pill { margin-top: 12px; display: inline-flex; align-items: center; gap: 12px; padding: 13px 27px; border: 1.5px solid var(--line); border-radius: 99px; font-size: 24px; line-height: 1.2; }
+.pill { margin-top: 12px; display: inline-flex; align-items: center; gap: 12px; padding: 13px 27px 13px 23px; border: 1.5px solid var(--line); border-radius: 99px; font-size: 24px; line-height: 1.2; }
+.mark { width: 28px; height: 28px; fill: currentColor; }
 .arrow { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .foot { position: absolute; left: 40px; right: 40px; bottom: 36px; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-size: 26px; color: var(--foot); white-space: nowrap; }
 .icons { display: flex; align-items: center; gap: 21px; }
-.icon { width: 42px; height: 42px; fill: currentColor; display: block; }
+.icon { width: 42px; height: 42px; fill: var(--brand, currentColor); display: block; }
 .spark { width: 18px; height: 18px; fill: currentColor; opacity: .8; }
 .ring { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px var(--ring); pointer-events: none; }
 </style></head><body>
@@ -129,7 +135,7 @@ html, body { width: ${CARD_WIDTH}px; height: ${CARD_HEIGHT}px; background: trans
 	<div class="copy">
 		<h1 class="headline">${escape(card.headline)}</h1>
 		<p class="sub">${escape(card.sub)}</p>
-		<span class="pill">${escape(card.cta)}${ARROW}</span>
+		<span class="pill">${GITHUB}${escape(card.cta)}${ARROW}</span>
 	</div>
 	<div class="foot"><span class="owner">${escape(card.owner)}</span><span class="icons">${card.icons.map(icon).join(SPARK)}</span></div>
 	<div class="ring"></div>

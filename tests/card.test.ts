@@ -30,6 +30,16 @@ describe('cardHtml', () => {
 		expect(html.match(/class="spark"/g)).toHaveLength(2);
 	});
 
+	test('paints brand icons in their colour and black brands in the ink', () => {
+		const html = cardHtml({ ...card, icons: ['obsidian', 'github'] }, 'art.png');
+		expect(html).toContain('aria-label="Obsidian" style="--brand: #7c3aed"');
+		expect(html).toMatch(/aria-label="GitHub"><path/);
+	});
+
+	test('puts the GitHub mark in front of the button label', () => {
+		expect(cardHtml(card, 'art.png')).toMatch(/<span class="pill"><svg class="mark" [^>]*><path d="M12 \.297[^"]*"\/><\/svg>View on GitHub/);
+	});
+
 	test('applies the picture crop', () => {
 		const html = cardHtml({ ...card, image: { x: 80, y: 10, zoom: 130, height: 60 } }, 'art.png');
 		expect(html).toContain('--fx: 80%; --fy: 10%; --zoom: 1.3; --media: 60%');

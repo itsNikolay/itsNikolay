@@ -37,7 +37,7 @@ Next to `card.json` lie the picture, `art.png` (or `.jpg`, `.webp`), and the ren
 `card-light.png`. An optional `art-light.png` is the picture for the light card; without it the light card
 shows `art.png` framed in a rounded panel, since a dark screenshot does not fade well into a light card.
 
-Icon marks come from [simple-icons](https://simpleicons.org) (CC0). To add one, put its name and path
+Icon marks come from [simple-icons](https://simpleicons.org) (CC0). To add one, put its name, path and brand colour
 into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; the tests check both agree.
 
 ## Design
@@ -50,8 +50,8 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 | Picture | Full width, top 57 % by default (750 × 598 lands 1:1), fades into the background from its middle; framed: 24 px in, radius 14 px, no fade |
 | Headline | Playfair Display 400, 64 px, line height 1.06, balanced, at most 2 lines |
 | Subtitle | Instrument Sans 400, 26 px, line height 1.4, at most 2 lines |
-| Button | Instrument Sans 24 px in a 1.5 px outline pill with a ↗ arrow |
-| Footer | Owner on the left; icons at 42 px separated by ✦ sparks on the right, 36 px from the bottom |
+| Button | Instrument Sans 24 px in a 1.5 px outline pill, the GitHub mark in front and a ↗ arrow after |
+| Footer | Owner on the left; icons at 42 px in their brand colours (black brands in the text colour), separated by ✦ sparks on the right, 36 px from the bottom |
 
 `npm run render` refuses a card whose headline or sub runs past 2 lines or whose text runs into the footer.
 
