@@ -1,6 +1,6 @@
 // The profile header: the name, one line on what the profile is about and the stack, set like the cards
 // (src/card.ts) on a transparent background, so it sits on GitHub's page instead of in a box above it.
-import { escape, PALETTES, SPARK, themedImage, themeFile, type CardTheme } from './card.ts';
+import { CARD_ICONS, escape, PALETTES, SPARK, themedImage, themeFile, type CardTheme } from './card.ts';
 
 /** header/header.json. */
 export interface ProfileHeader {
@@ -8,7 +8,7 @@ export interface ProfileHeader {
 	name: string;
 	/** One line on what the profile is about. */
 	tagline: string;
-	/** Up to 4 technologies, shown in small capitals. */
+	/** Up to 4 technologies, shown in small capitals, each after its icon when one in src/icons.ts has its name. */
 	stack: string[];
 }
 
@@ -26,6 +26,14 @@ export function parseHeader(input: unknown): ProfileHeader {
 	return header;
 }
 
+/** A stack item with the brand icon of the same name in front, in its colour. */
+function stackItem(item: string) {
+	const icon = Object.values(CARD_ICONS).find(({ name }) => name.toLowerCase() === item.toLowerCase());
+	const color = icon && 'color' in icon ? ` style="--brand: ${icon.color}"` : '';
+	const mark = icon ? `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"${color}><path d="${icon.d}"/></svg>` : '';
+	return `<span class="item">${mark}${escape(item)}</span>`;
+}
+
 /** The header as a transparent page in a theme; the ink is the card's, so it reads on that GitHub theme. */
 export function headerHtml(header: ProfileHeader, fontFaces = '', theme: CardTheme = 'dark') {
 	return `<!doctype html><html><head><meta charset="utf-8"><style>
@@ -38,12 +46,14 @@ html, body { width: ${HEADER_WIDTH}px; height: ${HEADER_HEIGHT}px; background: t
 .name { font: 400 132px/1 var(--serif); letter-spacing: -.012em; }
 .tagline { font-size: 54px; line-height: 1.2; color: var(--sub); }
 .stack { display: flex; align-items: center; gap: 30px; font-size: 36px; letter-spacing: .16em; text-transform: uppercase; color: var(--sub); }
+.item { display: inline-flex; align-items: center; gap: 15px; }
+.icon { width: 39px; height: 39px; fill: var(--brand, currentColor); }
 .spark { width: 21px; height: 21px; fill: currentColor; opacity: .8; }
 </style></head><body>
 <header class="header">
 	<h1 class="name">${escape(header.name)}</h1>
 	<p class="tagline">${escape(header.tagline)}</p>
-	<p class="stack">${header.stack.map((item) => `<span>${escape(item)}</span>`).join(SPARK)}</p>
+	<p class="stack">${header.stack.map(stackItem).join(SPARK)}</p>
 </header>
 </body></html>`;
 }

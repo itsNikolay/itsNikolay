@@ -9,8 +9,15 @@ describe('headerHtml', () => {
 		const html = headerHtml(header);
 		expect(html).toContain('>Nikolay Ponomarev.<');
 		expect(html).toContain('>Useful tools.<');
-		expect(html).toContain('<span>Ruby on Rails</span>');
+		expect(html).toContain('Ruby on Rails</span>');
 		expect(html.match(/class="spark"/g)).toHaveLength(1);
+	});
+
+	test('puts the brand icon of the same name in its colour in front of a stack item', () => {
+		const html = headerHtml({ ...header, stack: ['Ruby on Rails', 'TypeScript', 'Elixir'] });
+		expect(html).toContain('<span class="item"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="--brand: #d30001"><path d="M.741');
+		expect(html).toContain('style="--brand: #3178c6"');
+		expect(html).toContain('<span class="item">Elixir</span>');
 	});
 
 	test('sets the ink of the theme on a transparent page', () => {

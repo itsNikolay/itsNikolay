@@ -77,7 +77,8 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 The profile header, `header/header.json`, is set in the same type on a transparent background:
 the name in Playfair Display, a tagline and up to four technologies in small capitals. `npm run render`
 without slugs renders it to `header/header.png` and `header-light.png`, 1530 × 390, shown at `width="510"`,
-the width of two cards side by side.
+the width of two cards side by side. A technology named like an icon in `src/icons.ts` gets that icon in front,
+in its brand colour.
 
 ```json
 { "name": "Nikolay Ponomarev.", "tagline": "Useful tools. Thoughtful details.", "stack": ["Ruby on Rails", "TypeScript", "Obsidian"] }
