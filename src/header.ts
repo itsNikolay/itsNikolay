@@ -42,7 +42,7 @@ ${fontFaces}
 	--serif: 'Playfair Display', 'Times New Roman', serif; --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; }
 * { box-sizing: border-box; margin: 0; }
 html, body { width: ${HEADER_WIDTH}px; height: ${HEADER_HEIGHT}px; background: transparent; overflow: hidden; }
-.header { height: 100%; display: grid; align-content: center; justify-items: start; gap: 30px; color: var(--ink); font-family: var(--sans); white-space: nowrap; }
+.header { height: 100%; display: grid; place-content: center; justify-items: center; gap: 30px; color: var(--ink); font-family: var(--sans); text-align: center; white-space: nowrap; }
 .name { font: 400 132px/1 var(--serif); letter-spacing: -.012em; }
 .tagline { font-size: 54px; line-height: 1.2; color: var(--sub); }
 .stack { display: flex; align-items: center; gap: 30px; font-size: 36px; letter-spacing: .16em; text-transform: uppercase; color: var(--sub); }
