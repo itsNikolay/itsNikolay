@@ -31,7 +31,7 @@
 			"type": "string",
 			"minLength": 1,
 			"maxLength": 44,
-			"description": "Project name, ends with a dot. At most 2 lines."
+			"description": "Project name, without a trailing dot. At most 2 lines."
 		},
 		"sub": {
 			"type": "string",

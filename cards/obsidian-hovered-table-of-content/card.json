@@ -2,7 +2,7 @@
 	"$schema": "../../schema/card.schema.json",
 	"version": 1,
 	"repository": "itsNikolay/obsidian-hovered-table-of-content",
-	"headline": "Hovered Table of Content.",
+	"headline": "Hovered Table of Content",
 	"sub": "The outline of any Obsidian note, one hover away. With section previews and sticky headings.",
 	"cta": "View on GitHub",
 	"owner": "itsNikolay",

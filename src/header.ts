@@ -4,7 +4,7 @@ import { CARD_ICONS, escape, PALETTES, SPARK, themedImage, themeFile, type CardT
 
 /** header/header.json. */
 export interface ProfileHeader {
-	/** Ends with a dot, like a card headline. One line. */
+	/** Without a trailing dot, like a card headline. One line. */
 	name: string;
 	/** One line on what the profile is about. */
 	tagline: string;

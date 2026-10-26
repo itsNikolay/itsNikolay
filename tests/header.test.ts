@@ -2,12 +2,12 @@ import { describe, expect, test } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import { headerHtml, headerSnippet, parseHeader, type ProfileHeader } from '../src/header.ts';
 
-const header: ProfileHeader = { name: 'Nikolay Ponomarev.', tagline: 'Useful tools.', stack: ['Ruby on Rails', 'TypeScript'] };
+const header: ProfileHeader = { name: 'Nikolay Ponomarev', tagline: 'Useful tools.', stack: ['Ruby on Rails', 'TypeScript'] };
 
 describe('headerHtml', () => {
 	test('shows the name, tagline and stack separated by sparks', () => {
 		const html = headerHtml(header);
-		expect(html).toContain('>Nikolay Ponomarev.<');
+		expect(html).toContain('>Nikolay Ponomarev<');
 		expect(html).toContain('>Useful tools.<');
 		expect(html).toContain('Ruby on Rails</span>');
 		expect(html.match(/class="spark"/g)).toHaveLength(1);

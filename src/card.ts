@@ -9,7 +9,7 @@ export interface ProjectCard {
 	version: 1;
 	/** GitHub owner/name of the project; the card links there. */
 	repository: string;
-	/** Project name, ends with a dot. At most 2 lines (about 44 characters). */
+	/** Project name, without a trailing dot. At most 2 lines (about 44 characters). */
 	headline: string;
 	/** What the project gives the user. At most 2 lines (about 120 characters). */
 	sub: string;
@@ -81,7 +81,7 @@ export function newCard(repository: string): ProjectCard {
 	const [, owner, name] = match as unknown as [string, string, string];
 	const title = name.split(/[-_.]+/).filter(Boolean).map((word) => word[0]!.toUpperCase() + word.slice(1)).join(' ');
 	return {
-		version: 1, repository, headline: `${title}.`,
+		version: 1, repository, headline: title,
 		sub: 'One or two plain sentences on what it gives the user.',
 		cta: 'View on GitHub', owner, icons: ['github'],
 		image: { x: 50, y: 50, zoom: 100, height: CARD_ART_HEIGHT },

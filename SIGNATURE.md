@@ -16,7 +16,7 @@ Each project has one `cards/<slug>/card.json`. Its shape is the `ProjectCard` ty
 interface ProjectCard {
   version: 1;
   repository: string; // GitHub owner/name of the project; the card links there
-  headline: string;   // project name with a dot, at most 2 lines (~44 chars)
+  headline: string;   // project name without a dot, at most 2 lines (~44 chars)
   sub: string;        // what it gives the user, at most 2 lines (~120 chars)
   cta: string;        // pill button, usually "View on GitHub"
   owner: string;      // bottom left, usually the GitHub user
@@ -61,7 +61,7 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 
 ## Writing the copy
 
-- **headline**: the project name, ending with a dot: `Hovered Table of Content.`
+- **headline**: the project name, without a trailing dot: `Hovered Table of Content`.
 - **sub**: one or two plain sentences about what the user gets, not how it is built.
 - **cta**: what the button does, usually `View on GitHub`; `Add to Chrome` for a Chrome Web Store link.
 - **icons**: platform first, then language, then kind of project.
@@ -72,7 +72,7 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 
 > Make a ProjectCard `card.json` for the GitHub repository OWNER/NAME, following SIGNATURE.md and
 > schema/card.schema.json in itsNikolay/itsNikolay. Read the repository's README and package metadata.
-> The headline is the project name with a dot; the sub is one or two plain sentences on what it gives
+> The headline is the project name without a dot; the sub is one or two plain sentences on what it gives
 > the user, at most 120 characters; the cta is "View on GitHub"; the owner is OWNER; pick up to 3 icons
 > from the schema. Start the image at { "x": 50, "y": 50, "zoom": 100, "height": 57 }. Answer with the JSON only.
 
@@ -85,5 +85,5 @@ the width of two cards side by side. A technology named like an icon in `src/ico
 in its brand colour.
 
 ```json
-{ "name": "Nikolay Ponomarev.", "tagline": "Better than yesterday.", "stack": ["Ruby on Rails", "TypeScript", "Go", "Obsidian"] }
+{ "name": "Nikolay Ponomarev", "tagline": "Better than yesterday.", "stack": ["Ruby on Rails", "TypeScript", "Go", "Obsidian"] }
 ```

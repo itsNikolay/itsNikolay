@@ -2,7 +2,7 @@
 	"$schema": "../../schema/card.schema.json",
 	"version": 1,
 	"repository": "itsNikolay/transcript-youtube",
-	"headline": "Transcript YouTube.",
+	"headline": "Transcript YouTube",
 	"sub": "The transcript of a YouTube video right beside it, in your language. Copy it or save it as text in one click.",
 	"cta": "Add to Chrome",
 	"owner": "itsNikolay",
