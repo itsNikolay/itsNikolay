@@ -19,3 +19,11 @@ Paste a snippet into your profile README. It shows the light card on the light G
 ```html
 <a href="https://github.com/itsNikolay/obsidian-mermaid-flow-enhancer"><picture><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/cards/obsidian-mermaid-flow-enhancer/card-light.png"><img src="https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/cards/obsidian-mermaid-flow-enhancer/card.png" width="250" alt="Mermaid Flow Enhancer — Compact, tidy Mermaid flowcharts in Obsidian. Hover any node to light up the path that leads to it."></picture></a>
 ```
+
+## Transcript YouTube
+
+<img src="transcript-youtube/card.png" width="250" alt="Transcript YouTube — The transcript of a YouTube video right beside it, in your language. Copy it or save it as text in one click."> <img src="transcript-youtube/card-light.png" width="250" alt="The light card">
+
+```html
+<a href="https://chromewebstore.google.com/detail/Transcript%20YouTube/obigemjopcmecfaacinededdfdcinikk"><picture><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/cards/transcript-youtube/card-light.png"><img src="https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/cards/transcript-youtube/card.png" width="250" alt="Transcript YouTube — The transcript of a YouTube video right beside it, in your language. Copy it or save it as text in one click."></picture></a>
+```

@@ -19,6 +19,8 @@ export interface ProjectCard {
 	owner: string;
 	/** Up to 3 icons, bottom right: platform, language, kind. */
 	icons: CardIcon[];
+	/** Where the card leads instead of the repository, such as the project's page in the Chrome Web Store. */
+	link?: string;
 	/** Crop of the picture, in percent. */
 	image: {
 		/** Horizontal focus, 0–100. */
@@ -63,6 +65,7 @@ export function parseCard(input: unknown): ProjectCard {
 		if (typeof card[key] !== 'string' || !card[key].trim()) throw new Error(`Card needs a ${key}`);
 	if (!Array.isArray(card.icons) || card.icons.length > 3) throw new Error('Card icons must be a list of up to 3 keys');
 	for (const icon of card.icons) if (!Object.hasOwn(CARD_ICONS, icon)) throw new Error(`Unknown card icon: ${String(icon)}. Known: ${Object.keys(CARD_ICONS).join(', ')}`);
+	if (card.link !== undefined && (typeof card.link !== 'string' || !/^https:\/\/\S+$/.test(card.link))) throw new Error('Card link must be an https:// address');
 	if (!card.image || typeof card.image !== 'object') throw new Error('Card needs an image crop');
 	for (const [key, [min, max]] of Object.entries(ranges) as [keyof typeof ranges, readonly [number, number]][]) {
 		const value = card.image[key];
@@ -94,8 +97,14 @@ const icon = (key: CardIcon) => {
 	const { name, d } = CARD_ICONS[key], color = 'color' in CARD_ICONS[key] ? CARD_ICONS[key].color : undefined;
 	return `<svg class="icon" viewBox="0 0 24 24" role="img" aria-label="${escape(name)}"${color ? ` style="--brand: ${color}"` : ''}><path d="${d}"/></svg>`;
 };
-/** The GitHub mark in front of the button label: every card links to its repository on GitHub. */
-const GITHUB = `<svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="${CARD_ICONS.github.d}"/></svg>`;
+/** Where the card leads: its link, or else its repository on GitHub. */
+export const cardLink = (card: ProjectCard) => card.link ?? `https://github.com/${card.repository}`;
+/** The mark of the site the card leads to, in front of the button label; other sites get none. */
+const SITE_MARKS: Record<string, CardIcon> = { 'github.com': 'github', 'chromewebstore.google.com': 'googlechrome' };
+const mark = (card: ProjectCard) => {
+	const site = SITE_MARKS[new URL(cardLink(card)).hostname];
+	return site ? `<svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="${CARD_ICONS[site].d}"/></svg>` : '';
+};
 
 /**
  * The card as a 750 × 1050 page in a theme. Transparent rounded corners and a hairline ring in the ink
@@ -135,7 +144,7 @@ html, body { width: ${CARD_WIDTH}px; height: ${CARD_HEIGHT}px; background: trans
 	<div class="copy">
 		<h1 class="headline">${escape(card.headline)}</h1>
 		<p class="sub">${escape(card.sub)}</p>
-		<span class="pill">${GITHUB}${escape(card.cta)}${ARROW}</span>
+		<span class="pill">${mark(card)}${escape(card.cta)}${ARROW}</span>
 	</div>
 	<div class="foot"><span class="owner">${escape(card.owner)}</span><span class="icons">${card.icons.map(icon).join(SPARK)}</span></div>
 	<div class="ring"></div>
@@ -153,7 +162,7 @@ export function themedImage(dark: string, light: string, width: number, alt: str
 /** The profile README code for one card: the images in this repository, linked to the project. */
 export function snippet(slug: string, card: ProjectCard) {
 	const image = (theme: CardTheme) => `https://raw.githubusercontent.com/${CARDS_REPOSITORY}/main/cards/${slug}/${themeFile('card', theme)}`;
-	return `<a href="https://github.com/${card.repository}">${themedImage(image('dark'), image('light'), 250, `${title(card)} — ${card.sub}`)}</a>`;
+	return `<a href="${escape(cardLink(card))}">${themedImage(image('dark'), image('light'), 250, `${title(card)} — ${card.sub}`)}</a>`;
 }
 
 /** cards/README.md: every card with its preview and profile README snippet, sorted by headline. */

@@ -69,9 +69,15 @@
 					"python",
 					"ruby",
 					"rubyonrails",
-					"github"
+					"github",
+					"googlechrome"
 				]
 			}
+		},
+		"link": {
+			"type": "string",
+			"pattern": "^https://\\S+$",
+			"description": "Where the card leads instead of the repository, such as the project's page in the Chrome Web Store."
 		},
 		"image": {
 			"type": "object",

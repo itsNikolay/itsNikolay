@@ -21,6 +21,7 @@ interface ProjectCard {
   cta: string;        // pill button, usually "View on GitHub"
   owner: string;      // bottom left, usually the GitHub user
   icons: CardIcon[];  // up to 3, bottom right
+  link?: string;      // https:// address the card leads to instead of the repository
   image: {
     x: number;        // 0–100, horizontal focus
     y: number;        // 0–100, vertical focus
@@ -30,8 +31,11 @@ interface ProjectCard {
 }
 
 type CardIcon = 'obsidian' | 'typescript' | 'plugin' | 'javascript' | 'css' | 'markdown'
-  | 'react' | 'nodedotjs' | 'python' | 'ruby' | 'github';
+  | 'react' | 'nodedotjs' | 'python' | 'ruby' | 'rubyonrails' | 'github' | 'googlechrome';
 ```
+
+A card links to its repository on GitHub. A project that is private on GitHub or lives in a store sets
+`link` instead, such as its Chrome Web Store page; `repository` still names its source.
 
 Next to `card.json` lie the picture, `art.png` (or `.jpg`, `.webp`), and the rendered `card.png` and
 `card-light.png`. An optional `art-light.png` is the picture for the light card; without it the light card
@@ -50,7 +54,7 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 | Picture | Full width, top 57 % by default (750 × 598 lands 1:1), fades into the background from its middle; framed: 24 px in, radius 14 px, no fade |
 | Headline | Playfair Display 400, 64 px, line height 1.06, balanced, at most 2 lines |
 | Subtitle | Instrument Sans 400, 26 px, line height 1.4, at most 2 lines |
-| Button | Instrument Sans 24 px in a 1.5 px outline pill, the GitHub mark in front and a ↗ arrow after |
+| Button | Instrument Sans 24 px in a 1.5 px outline pill, the mark of the site it leads to in front (GitHub or Chrome Web Store, none for others) and a ↗ arrow after |
 | Footer | Owner on the left; icons at 42 px in their brand colours (black brands in the text colour), separated by ✦ sparks on the right, 36 px from the bottom |
 
 `npm run render` refuses a card whose headline or sub runs past 2 lines or whose text runs into the footer.
@@ -59,7 +63,7 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 
 - **headline**: the project name, ending with a dot: `Hovered Table of Content.`
 - **sub**: one or two plain sentences about what the user gets, not how it is built.
-- **cta**: what the button does, usually `View on GitHub`.
+- **cta**: what the button does, usually `View on GitHub`; `Add to Chrome` for a Chrome Web Store link.
 - **icons**: platform first, then language, then kind of project.
 - **image**: a screenshot or illustration with its subject in the middle, about 750 × 600 px.
   A dark picture blends best; start from `{ "x": 50, "y": 50, "zoom": 100, "height": 57 }`.

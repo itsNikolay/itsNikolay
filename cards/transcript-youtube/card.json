@@ -1,0 +1,21 @@
+{
+	"$schema": "../../schema/card.schema.json",
+	"version": 1,
+	"repository": "itsNikolay/transcript-youtube",
+	"headline": "Transcript YouTube.",
+	"sub": "The transcript of a YouTube video right beside it, in your language. Copy it or save it as text in one click.",
+	"cta": "Add to Chrome",
+	"owner": "itsNikolay",
+	"icons": [
+		"googlechrome",
+		"typescript",
+		"plugin"
+	],
+	"link": "https://chromewebstore.google.com/detail/Transcript%20YouTube/obigemjopcmecfaacinededdfdcinikk",
+	"image": {
+		"x": 50,
+		"y": 50,
+		"zoom": 100,
+		"height": 57
+	}
+}

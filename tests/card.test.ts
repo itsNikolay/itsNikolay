@@ -40,6 +40,12 @@ describe('cardHtml', () => {
 		expect(cardHtml(card, 'art.png')).toMatch(/<span class="pill"><svg class="mark" [^>]*><path d="M12 \.297[^"]*"\/><\/svg>View on GitHub/);
 	});
 
+	test('puts the mark of the site the card links to on the button, and none for an unknown site', () => {
+		const store = cardHtml({ ...card, link: 'https://chromewebstore.google.com/detail/x/abc', cta: 'Add to Chrome' }, 'art.png');
+		expect(store).toContain(`<span class="pill"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="${CARD_ICONS.googlechrome.d}"/></svg>Add to Chrome`);
+		expect(cardHtml({ ...card, link: 'https://example.com' }, 'art.png')).toContain('<span class="pill">View on GitHub');
+	});
+
 	test('applies the picture crop', () => {
 		const html = cardHtml({ ...card, image: { x: 80, y: 10, zoom: 130, height: 60 } }, 'art.png');
 		expect(html).toContain('--fx: 80%; --fy: 10%; --zoom: 1.3; --media: 60%');
@@ -73,6 +79,11 @@ describe('snippet and gallery', () => {
 	test('the snippet links the images in this repository to the project, light on the light theme', () => {
 		const raw = 'https://raw.githubusercontent.com/itsNikolay/itsNikolay/main/cards/hovered-toc';
 		expect(snippet('hovered-toc', card)).toBe(`<a href="https://github.com/itsNikolay/obsidian-hovered-table-of-content"><picture><source media="(prefers-color-scheme: light)" srcset="${raw}/card-light.png"><img src="${raw}/card.png" width="250" alt="Hovered Table of Content — The outline of any Obsidian note, one hover away."></picture></a>`);
+	});
+
+	test('the snippet links to the card link when there is one', () => {
+		const link = 'https://chromewebstore.google.com/detail/Transcript%20YouTube/abc';
+		expect(snippet('t', { ...card, link })).toMatch(new RegExp(`^<a href="${link}"><picture>`));
 	});
 
 	test('the gallery lists every card with its preview and snippet', () => {
@@ -113,12 +124,17 @@ describe('parseCard', () => {
 		expect(() => parseCard({ ...card, icons: ['obsidian', 'typescript', 'plugin', 'github'] })).toThrow(/icons/);
 		expect(() => parseCard({ ...card, image: { ...card.image, height: 90 } })).toThrow(/height/);
 		expect(() => parseCard({ ...card, image: { ...card.image, zoom: 50 } })).toThrow(/zoom/);
+		expect(() => parseCard({ ...card, link: 'http://example.com' })).toThrow(/link/);
+	});
+
+	test('accepts a card with an https link', () => {
+		expect(() => parseCard({ ...card, link: 'https://chromewebstore.google.com/detail/x/abc' })).not.toThrow();
 	});
 
 	test('the JSON Schema agrees with the TypeScript signature', async () => {
 		interface Schema { properties: Record<string, unknown> & { image: { properties: object }; icons: { items: { enum: string[] } } } }
 		const schema = JSON.parse(await readFile('schema/card.schema.json', 'utf8')) as Schema;
-		expect(Object.keys(schema.properties).filter((key) => key !== '$schema').sort()).toEqual(Object.keys(card).sort());
+		expect(Object.keys(schema.properties).filter((key) => key !== '$schema').sort()).toEqual(Object.keys({ ...card, link: '' }).sort());
 		expect(Object.keys(schema.properties.image.properties).sort()).toEqual(Object.keys(card.image).sort());
 		expect(schema.properties.icons.items.enum).toEqual(Object.keys(CARD_ICONS));
 	});

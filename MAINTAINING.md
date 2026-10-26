@@ -7,6 +7,7 @@ SIGNATURE.md describes both.
 ## Add a project
 
 1. `npm run new -- owner/name` starts `cards/<slug>/card.json`. Write its copy as SIGNATURE.md says.
+   For a private repository or a store listing, set `link` to the page the card should open.
 2. Save a screenshot as `cards/<slug>/art.png`, about 750 × 600 px. A light screenshot as `art-light.png` is optional.
 3. `npm run render` renders the cards and the header and updates cards/README.md.
 4. Paste the card's snippet from cards/README.md into the second paragraph of README.md, most important project first.
