@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { readdir, readFile } from 'node:fs/promises';
-import { CARD_ICONS, cardHtml, gallery, newCard, parseCard, snippet, type ProjectCard } from '../src/card.ts';
+import { CARD_ICONS, cardHtml, gallery, iconSvg, newCard, parseCard, snippet, type ProjectCard } from '../src/card.ts';
 
 const card: ProjectCard = {
 	version: 1,
@@ -72,6 +72,19 @@ describe('cardHtml', () => {
 		expect(html).not.toContain('<script>x');
 		expect(html).toContain('&lt;script&gt;x&lt;/script&gt;');
 		expect(html).toContain('a &amp; b');
+	});
+});
+
+describe('iconSvg', () => {
+	test('fills a brand icon with its colour', () => {
+		expect(iconSvg('obsidian')).toBe(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#7c3aed" d="${CARD_ICONS.obsidian.d}"/></svg>\n`);
+	});
+
+	test('gives a black brand the ink of the reader\'s colour scheme', () => {
+		const svg = iconSvg('github');
+		expect(svg).toContain('path { fill: #191c22; }');
+		expect(svg).toContain('@media (prefers-color-scheme: dark) { path { fill: #f3efe6; } }');
+		expect(svg).toContain(`<path d="${CARD_ICONS.github.d}"/>`);
 	});
 });
 

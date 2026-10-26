@@ -1,10 +1,11 @@
 // npm run render [-- slug ...]: renders cards/<slug>/card.json + art.(png|jpg|webp) to cards/<slug>/card.png and
 // card-light.png (750 × 1050) in headless Chromium, then rewrites the cards/README.md gallery. Without slugs it
-// also renders header/header.json to header/header.png and header-light.png.
+// also renders header/header.json to header/header.png and header-light.png and writes every icon to icons/<key>.svg
+// for the section headings of the profile README.
 import { chromium } from 'playwright';
-import { access, readdir, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, join } from 'node:path';
-import { CARD_HEIGHT, CARD_THEMES, CARD_WIDTH, cardHtml, gallery, parseCard, themeFile, type CardTheme, type ProjectCard } from './card.ts';
+import { CARD_HEIGHT, CARD_ICONS, CARD_THEMES, CARD_WIDTH, cardHtml, gallery, iconSvg, parseCard, themeFile, type CardIcon, type CardTheme, type ProjectCard } from './card.ts';
 import { HEADER_HEIGHT, HEADER_WIDTH, headerHtml, parseHeader } from './header.ts';
 
 const root = new URL('..', import.meta.url).pathname;
@@ -84,6 +85,11 @@ try {
 }
 await writeFile(join(cardsDir, 'README.md'), gallery(cards));
 console.log('Updated cards/README.md');
+if (!wanted.length) {
+	await mkdir(join(root, 'icons'), { recursive: true });
+	for (const key of Object.keys(CARD_ICONS) as CardIcon[]) await writeFile(join(root, 'icons', `${key}.svg`), iconSvg(key));
+	console.log('Wrote icons/*.svg');
+}
 if (failures.length) {
 	console.error(`\nNot rendered, shorten the text or lower image.height:\n${failures.join('\n')}`);
 	process.exit(1);

@@ -12,7 +12,8 @@ SIGNATURE.md describes both.
 3. `npm run render` renders the cards and the header and updates cards/README.md.
 4. Paste the card's snippet from cards/README.md into the paragraph of its platform's section in README.md,
    most important project first. Separate cards with `&nbsp;&nbsp;`; three fit in a row. A new platform gets
-   its own section: an `<h3 align="center">` with the platform's name above a `<p align="center">` of cards.
+   its own section: a `###` heading with the platform's icon from `icons/` and its name above a `<p>` of cards,
+   `### <img src="icons/obsidian.svg" width="20" height="20" alt=""> Obsidian`. Everything sits on the left.
 
 ## Change the header
 

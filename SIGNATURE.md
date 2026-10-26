@@ -43,6 +43,8 @@ shows `art.png` framed in a rounded panel, since a dark screenshot does not fade
 
 Icon marks come from [simple-icons](https://simpleicons.org) (CC0). To add one, put its name, path and brand colour
 into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; the tests check both agree.
+`npm run render` without slugs also writes every icon to `icons/<key>.svg` for the section headings of the
+profile README, in its brand colour; a black brand follows the reader's colour scheme.
 
 ## Design
 
@@ -78,11 +80,11 @@ into [`src/icons.ts`](src/icons.ts) and its key into the `enum` in the schema; t
 
 ## Header
 
-The profile header, `header/header.json`, is set in the same type on a transparent background:
-the name in Playfair Display, a tagline and up to four technologies in small capitals. `npm run render`
-without slugs renders it to `header/header.png` and `header-light.png`, 1530 × 390, shown at `width="510"`,
-the width of two cards side by side. A technology named like an icon in `src/icons.ts` gets that icon in front,
-in its brand colour.
+The profile header, `header/header.json`, is set in the same type on a transparent background, flush left
+like the rest of the page: the name in Playfair Display, a tagline and up to four technologies in small
+capitals. `npm run render` without slugs renders it to `header/header.png` and `header-light.png`, 1530 × 390,
+shown at `width="510"`, the width of two cards side by side. A technology named like an icon in `src/icons.ts`
+gets that icon in front, in its brand colour.
 
 ```json
 { "name": "Nikolay Ponomarev", "tagline": "Better than yesterday.", "stack": ["Ruby on Rails", "TypeScript", "Go", "Obsidian"] }

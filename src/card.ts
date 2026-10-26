@@ -97,6 +97,17 @@ const icon = (key: CardIcon) => {
 	const { name, d } = CARD_ICONS[key], color = 'color' in CARD_ICONS[key] ? CARD_ICONS[key].color : undefined;
 	return `<svg class="icon" viewBox="0 0 24 24" role="img" aria-label="${escape(name)}"${color ? ` style="--brand: ${color}"` : ''}><path d="${d}"/></svg>`;
 };
+/**
+ * An icon as a standalone SVG file, for a section heading in the profile README (icons/<key>.svg).
+ * A black brand takes the ink of the card theme that matches the reader's colour scheme.
+ */
+export function iconSvg(key: CardIcon) {
+	const { d } = CARD_ICONS[key], color = 'color' in CARD_ICONS[key] ? CARD_ICONS[key].color : undefined;
+	const ink = (theme: CardTheme) => /--ink: (#\w+)/.exec(PALETTES[theme])![1];
+	const style = color ? '' : `<style>path { fill: ${ink('light')}; } @media (prefers-color-scheme: dark) { path { fill: ${ink('dark')}; } }</style>`;
+	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">${style}<path${color ? ` fill="${color}"` : ''} d="${d}"/></svg>\n`;
+}
+
 /** Where the card leads: its link, or else its repository on GitHub. */
 export const cardLink = (card: ProjectCard) => card.link ?? `https://github.com/${card.repository}`;
 /** The mark of the site the card leads to, in front of the button label; other sites get none. */
