@@ -31,7 +31,7 @@ interface ProjectCard {
 }
 
 type CardIcon = 'obsidian' | 'typescript' | 'plugin' | 'javascript' | 'css' | 'markdown'
-  | 'react' | 'nodedotjs' | 'python' | 'ruby' | 'rubyonrails' | 'github' | 'googlechrome';
+  | 'react' | 'nodedotjs' | 'python' | 'ruby' | 'rubyonrails' | 'github' | 'googlechrome' | 'go';
 ```
 
 A card links to its repository on GitHub. A project that is private on GitHub or lives in a store sets
@@ -85,5 +85,5 @@ the width of two cards side by side. A technology named like an icon in `src/ico
 in its brand colour.
 
 ```json
-{ "name": "Nikolay Ponomarev.", "tagline": "Useful tools. Thoughtful details.", "stack": ["Ruby on Rails", "TypeScript", "Obsidian"] }
+{ "name": "Nikolay Ponomarev.", "tagline": "Better than yesterday.", "stack": ["Ruby on Rails", "TypeScript", "Go", "Obsidian"] }
 ```

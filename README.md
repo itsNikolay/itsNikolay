@@ -1,5 +1,5 @@
 <p align="center">
-  <picture><source media="(prefers-color-scheme: light)" srcset="header/header-light.png"><img src="header/header.png" width="510" alt="Nikolay Ponomarev — Useful tools. Thoughtful details. Ruby on Rails, TypeScript, Obsidian."></picture>
+  <picture><source media="(prefers-color-scheme: light)" srcset="header/header-light.png"><img src="header/header.png" width="510" alt="Nikolay Ponomarev — Better than yesterday. Ruby on Rails, TypeScript, Go, Obsidian."></picture>
 </p>
 
 <p align="center">
