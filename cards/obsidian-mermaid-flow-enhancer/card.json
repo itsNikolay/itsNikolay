@@ -16,5 +16,10 @@
 		"y": 50,
 		"zoom": 100,
 		"height": 57
+	},
+	"downloads": {
+		"source": "obsidian",
+		"id": "mermaid-flow-enhancer",
+		"count": 673
 	}
 }

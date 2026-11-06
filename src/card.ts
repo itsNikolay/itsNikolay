@@ -21,6 +21,8 @@ export interface ProjectCard {
 	icons: CardIcon[];
 	/** Where the card leads instead of the repository, such as the project's page in the Chrome Web Store. */
 	link?: string;
+	/** Store identity and the latest saved download/user count. */
+	downloads?: { source: 'obsidian' | 'chrome'; id: string; count: number };
 	/** Crop of the picture, in percent. */
 	image: {
 		/** Horizontal focus, 0–100. */
@@ -66,6 +68,11 @@ export function parseCard(input: unknown): ProjectCard {
 	if (!Array.isArray(card.icons) || card.icons.length > 3) throw new Error('Card icons must be a list of up to 3 keys');
 	for (const icon of card.icons) if (!Object.hasOwn(CARD_ICONS, icon)) throw new Error(`Unknown card icon: ${String(icon)}. Known: ${Object.keys(CARD_ICONS).join(', ')}`);
 	if (card.link !== undefined && (typeof card.link !== 'string' || !/^https:\/\/\S+$/.test(card.link))) throw new Error('Card link must be an https:// address');
+	if (card.downloads !== undefined) {
+		const d = card.downloads;
+		if (!d || !['obsidian', 'chrome'].includes(d.source) || typeof d.id !== 'string' || !/^[a-z0-9-]+$/.test(d.id) || !Number.isSafeInteger(d.count) || d.count < 0)
+			throw new Error('Card downloads needs a source, store id and nonnegative integer count');
+	}
 	if (!card.image || typeof card.image !== 'object') throw new Error('Card needs an image crop');
 	for (const [key, [min, max]] of Object.entries(ranges) as [keyof typeof ranges, readonly [number, number]][]) {
 		const value = card.image[key];
@@ -145,6 +152,8 @@ html, body { width: ${CARD_WIDTH}px; height: ${CARD_HEIGHT}px; background: trans
 .mark { width: 28px; height: 28px; fill: currentColor; }
 .arrow { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .foot { position: absolute; left: 40px; right: 40px; bottom: 36px; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-size: 26px; color: var(--foot); white-space: nowrap; }
+.downloads { display: inline-flex; align-items: center; gap: 8px; font-size: 22px; }
+.download-icon { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .icons { display: flex; align-items: center; gap: 21px; }
 .icon { width: 42px; height: 42px; fill: var(--brand, currentColor); display: block; }
 .spark { width: 18px; height: 18px; fill: currentColor; opacity: .8; }
@@ -157,7 +166,7 @@ html, body { width: ${CARD_WIDTH}px; height: ${CARD_HEIGHT}px; background: trans
 		<p class="sub">${escape(card.sub)}</p>
 		<span class="pill">${mark(card)}${escape(card.cta)}${ARROW}</span>
 	</div>
-	<div class="foot"><span class="owner">${escape(card.owner)}</span><span class="icons">${card.icons.map(icon).join(SPARK)}</span></div>
+	<div class="foot"><span class="owner">${escape(card.owner)}</span>${card.downloads ? `<span class="downloads"><svg class="download-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span>${card.downloads.count.toLocaleString('en-US')} ${card.downloads.source === 'chrome' ? 'users' : 'downloads'}</span></span>` : ''}<span class="icons">${card.icons.map(icon).join(SPARK)}</span></div>
 	<div class="ring"></div>
 </article>
 </body></html>`;

@@ -2,6 +2,7 @@
 // card-light.png (750 × 1050) in headless Chromium, then rewrites the cards/README.md gallery. Without slugs it
 // also renders header/header.json to header/header.png and header-light.png and writes every icon to icons/<key>.svg
 // for the section headings of the profile README.
+import { fetchDownloads } from './downloads.ts';
 import { chromium } from 'playwright';
 import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, join } from 'node:path';
@@ -30,13 +31,25 @@ async function findArt(slug: string, theme: CardTheme) {
 }
 
 const all = (await readdir(cardsDir, { withFileTypes: true })).filter((entry) => entry.isDirectory()).map((entry) => entry.name);
-const wanted = process.argv.slice(2);
+const offline = process.argv.includes('--offline');
+const wanted = process.argv.slice(2).filter((arg) => arg !== '--offline');
 for (const slug of wanted) if (!all.includes(slug)) throw new Error(`No card cards/${slug}. Start one with npm run new -- owner/name`);
 
 const cards: { slug: string; card: ProjectCard }[] = [];
 for (const slug of all) {
 	try { cards.push({ slug, card: parseCard(JSON.parse(await readFile(join(cardsDir, slug, 'card.json'), 'utf8'))) }); }
 	catch (error) { throw new Error(`cards/${slug}/card.json: ${(error as Error).message}`); }
+}
+
+for (const { slug, card } of cards.filter(({ slug }) => !wanted.length || wanted.includes(slug))) {
+	if (!offline && card.downloads) {
+		card.downloads.count = await fetchDownloads(card.downloads);
+		const path = join(cardsDir, slug, 'card.json');
+		const raw = JSON.parse(await readFile(path, 'utf8'));
+		raw.downloads = card.downloads;
+		await writeFile(path, JSON.stringify(raw, null, '\t') + '\n');
+		console.log(`Updated ${slug}: ${card.downloads.count}`);
+	}
 }
 
 const faces = await fontFaces();
@@ -61,7 +74,8 @@ try {
 				lines('.headline') > 2 && 'the headline is longer than 2 lines',
 				lines('.sub') > 2 && 'the sub is longer than 2 lines',
 				box('.copy').bottom > box('.foot').top - 16 && 'the text runs into the footer',
-				box('.owner').right > box('.icons').left - 16 && 'the owner runs into the icons',
+				...Array.from(document.querySelector('.foot')!.children).slice(1).map((el) =>
+					el.previousElementSibling!.getBoundingClientRect().right > el.getBoundingClientRect().left - 12 && 'footer items overlap'),
 			].filter((problem) => problem);
 		});
 		if (problems.length) { failures.push(`cards/${slug}: ${problems.join('; ')}`); break; }

@@ -14,6 +14,12 @@ const card: ProjectCard = {
 };
 
 describe('cardHtml', () => {
+	test('shows a download icon and formatted count, with an honest metric label', () => {
+		const downloads = { source: 'obsidian' as const, id: 'example', count: 1224 };
+		expect(cardHtml({ ...card, downloads }, 'art.png')).toContain('1,224 downloads');
+		expect(cardHtml({ ...card, downloads: { ...downloads, source: 'chrome' } }, 'art.png')).toContain('1,224 users');
+		expect(cardHtml({ ...card, downloads }, 'art.png')).toContain('class="download-icon"');
+	});
 	test('shows the headline, subtitle, button, owner and art', () => {
 		const html = cardHtml(card, 'art.png');
 		expect(html).toContain('>Hovered Table of Content<');
@@ -140,6 +146,11 @@ describe('parseCard', () => {
 		expect(() => parseCard({ ...card, link: 'http://example.com' })).toThrow(/link/);
 	});
 
+	test('rejects invalid download statistics', () => {
+		for (const downloads of [null, { source: 'unknown', id: 'x', count: 1 }, { source: 'obsidian', id: '', count: 1 }, { source: 'chrome', id: 'x', count: -1 }])
+			expect(() => parseCard({ ...card, downloads })).toThrow(/downloads/);
+	});
+
 	test('accepts a card with an https link', () => {
 		expect(() => parseCard({ ...card, link: 'https://chromewebstore.google.com/detail/x/abc' })).not.toThrow();
 	});
@@ -147,7 +158,7 @@ describe('parseCard', () => {
 	test('the JSON Schema agrees with the TypeScript signature', async () => {
 		interface Schema { properties: Record<string, unknown> & { image: { properties: object }; icons: { items: { enum: string[] } } } }
 		const schema = JSON.parse(await readFile('schema/card.schema.json', 'utf8')) as Schema;
-		expect(Object.keys(schema.properties).filter((key) => key !== '$schema').sort()).toEqual(Object.keys({ ...card, link: '' }).sort());
+		expect(Object.keys(schema.properties).filter((key) => key !== '$schema').sort()).toEqual(Object.keys({ ...card, link: '', downloads: {} }).sort());
 		expect(Object.keys(schema.properties.image.properties).sort()).toEqual(Object.keys(card.image).sort());
 		expect(schema.properties.icons.items.enum).toEqual(Object.keys(CARD_ICONS));
 	});

@@ -20,5 +20,16 @@ SIGNATURE.md describes both.
 
 Edit `header/header.json` and run `npm run render`.
 
-Keep the copy in English and the links working. Avoid counters, stats and other externally generated widgets
-so the page stays quiet, fast and stable.
+Keep the copy in English and the links working. Download counts are baked into the PNGs; the profile
+needs no external widgets.
+
+## Update download counts
+
+An optional `downloads` object in `card.json` contains `source` (`obsidian` or `chrome`), the store `id`
+and the last saved integer `count`. `npm run render` refreshes these values before rendering.
+Obsidian totals come from the official community-plugin-stats.json; Chrome counts come from the
+English Chrome Web Store listing and are labelled **users**, since they are not lifetime downloads.
+
+Use `npm run render -- --offline` to render the saved counts without network access. A failed fetch
+or an unrecognisable response aborts the online render instead of replacing the count with zero.
+Counts change only when cards are rendered; no scheduled refresh is configured.

@@ -22,6 +22,7 @@ interface ProjectCard {
   owner: string;      // bottom left, usually the GitHub user
   icons: CardIcon[];  // up to 3, bottom right
   link?: string;      // https:// address the card leads to instead of the repository
+  downloads?: { source: 'obsidian' | 'chrome'; id: string; count: number };
   image: {
     x: number;        // 0–100, horizontal focus
     y: number;        // 0–100, vertical focus
@@ -57,7 +58,7 @@ profile README, in its brand colour; a black brand follows the reader's colour s
 | Headline | Playfair Display 400, 64 px, line height 1.06, balanced, at most 2 lines |
 | Subtitle | Instrument Sans 400, 26 px, line height 1.4, at most 2 lines |
 | Button | Instrument Sans 24 px in a 1.5 px outline pill, the mark of the site it leads to in front (GitHub or Chrome Web Store, none for others) and a ↗ arrow after |
-| Footer | Owner on the left; icons at 42 px in their brand colours (black brands in the text colour), separated by ✦ sparks on the right, 36 px from the bottom |
+| Footer | Owner on the left; optional download icon and count in the centre (Chrome: users); icons at 42 px in their brand colours (black brands in the text colour), separated by ✦ sparks on the right, 36 px from the bottom |
 
 `npm run render` refuses a card whose headline or sub runs past 2 lines or whose text runs into the footer.
 
